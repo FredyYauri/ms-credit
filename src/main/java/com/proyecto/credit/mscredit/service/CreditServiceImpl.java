@@ -2,12 +2,14 @@ package com.proyecto.credit.mscredit.service;
 
 import com.proyecto.credit.mscredit.entity.Credit;
 import com.proyecto.credit.mscredit.repository.CreditRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
+@Slf4j
 public class CreditServiceImpl implements CreditService {
     @Autowired
     private CreditRepository creditRepository;
@@ -37,6 +39,14 @@ public class CreditServiceImpl implements CreditService {
     @Override
     public Mono<Credit> deleteCredit(Integer idCredit) {
         return creditRepository.findById(idCredit)
-                .flatMap(creditDelete ->  creditRepository.delete(creditDelete).then(Mono.just(creditDelete)));
+                .flatMap(creditDelete -> creditRepository.delete(creditDelete).then(Mono.just(creditDelete)));
+    }
+
+    @Override
+    public Flux<Credit> getByCustomerID(Integer idCustomer) {
+        log.info("INI impl getByCustomerID: idCustomer " + idCustomer);
+        return creditRepository.findAll().filter(credits ->
+                credits.getIdConsumer() == idCustomer
+        );
     }
 }
