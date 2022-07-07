@@ -1,14 +1,19 @@
 package com.proyecto.credit.mscredit.service;
 
 import com.proyecto.credit.mscredit.entity.Credit;
+import com.proyecto.credit.mscredit.entity.CreditDto;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface CreditService {
-    Flux<Credit> getAll();
-    Mono<Credit> saveCredit(Credit credit);
-    Mono<Credit> updateCredit(Credit credit);
-    Mono<Credit> deleteCredit(Integer idCredit);
+    Flux<CreditDto> getAllCredit();
 
-    Flux<Credit> getByCustomerID(Integer idCustomer);
+    Mono<CreditDto> saveCredit(Credit credit);
+
+    Mono<CreditDto> updateCredit(Credit credit);
+
+    Mono<CreditDto> deleteCredit(Integer idCredit);
+
+    Flux<CreditDto> getByCustomerID(Integer idCustomer);
+
 }
