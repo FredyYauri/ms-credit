@@ -5,6 +5,7 @@ import com.proyecto.credit.mscredit.entity.CreditDto;
 import com.proyecto.credit.mscredit.service.CreditService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

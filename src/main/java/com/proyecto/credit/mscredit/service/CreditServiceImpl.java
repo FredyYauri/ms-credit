@@ -6,16 +6,20 @@ import com.proyecto.credit.mscredit.repository.CreditRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
 @Slf4j
+@Component
 public class CreditServiceImpl implements CreditService {
     @Autowired
     private CreditRepository creditRepository;
     private final ModelMapper mapper = new ModelMapper();
+    @Autowired
+    private CreditEventService creditEventService;
 
     /**
      * Método encargado de obtener todas las cuentas de crédito
@@ -50,6 +54,7 @@ public class CreditServiceImpl implements CreditService {
      */
     @Override
     public Mono<CreditDto> saveCredit(Credit credit) {
+        kafkaSave(mapToCreditModel(credit));
         return creditRepository.save(credit).map(cre -> mapToCreditModel(cre));
     }
 
@@ -95,4 +100,10 @@ public class CreditServiceImpl implements CreditService {
         log.info("Ingresa al mapToCreditModel");
         return mapper.map(credit, CreditDto.class);
     }
+
+    private void kafkaSave(CreditDto credit) {
+        System.out.println("Received " + credit);
+        this.creditEventService.publish(credit);
+    }
 }
+

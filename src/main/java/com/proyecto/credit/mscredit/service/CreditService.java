@@ -2,6 +2,7 @@ package com.proyecto.credit.mscredit.service;
 
 import com.proyecto.credit.mscredit.entity.Credit;
 import com.proyecto.credit.mscredit.entity.CreditDto;
+import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
